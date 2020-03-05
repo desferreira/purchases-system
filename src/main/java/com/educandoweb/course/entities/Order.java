@@ -2,6 +2,7 @@ package com.educandoweb.course.entities;
 
 import com.educandoweb.course.entities.enums.OrderStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -29,8 +30,11 @@ public class Order implements Serializable {
     @JoinColumn(name = "client_id")
     private User client;
 
-    @OneToMany(mappedBy = "id.order")
+    @OneToMany(mappedBy = "id.order") //mapeia a chave composta id no atributo order
     private Set<OrderItem> items = new HashSet<>();
+
+    @OneToOne(mappedBy = "order", cascade = CascadeType.ALL) //mapeia para deixar com o mesmo ID
+    private Payment payment;
 
     public Order() {
     }
@@ -76,6 +80,15 @@ public class Order implements Serializable {
 
     public Set<OrderItem> getOrderItems(){
         return this.items;
+    }
+
+    @JsonIgnore
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
     }
 
     @Override
