@@ -1,14 +1,8 @@
 package com.educandoweb.course.config;
 
-import com.educandoweb.course.entities.Category;
-import com.educandoweb.course.entities.Order;
-import com.educandoweb.course.entities.Product;
-import com.educandoweb.course.entities.User;
+import com.educandoweb.course.entities.*;
 import com.educandoweb.course.entities.enums.OrderStatus;
-import com.educandoweb.course.repositories.CategoryRepository;
-import com.educandoweb.course.repositories.OrderRepository;
-import com.educandoweb.course.repositories.ProductRepository;
-import com.educandoweb.course.repositories.UserRepository;
+import com.educandoweb.course.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -33,6 +27,9 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private OrderItemRepository orderItemRepository;
+
     @Override
     public void run(String... args) throws Exception {
         User u1 = new User(null, "Maria Brown", "123456" , "988888888", "maria@gmail.com");
@@ -50,6 +47,10 @@ public class TestConfig implements CommandLineRunner {
         Product p2 = new Product(null, "Smart TV", "Nulla eu imperdiet purus. Maecenas ante.", 2190.0, "");
         Product p3 = new Product(null, "Macbook Pro", "Nam eleifend maximus tortor, at mollis.", 1250.0, "");
 
+        OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+        OrderItem oi2 = new OrderItem(o1, p2, 1, p2.getPrice());
+        OrderItem oi3 = new OrderItem(o2, p1, 5, p3.getPrice());
+
         p1.getCategories().add(cat2);
         p2.getCategories().add(cat1);
         p3.getCategories().add(cat3);
@@ -58,6 +59,7 @@ public class TestConfig implements CommandLineRunner {
         orderRepository.saveAll(Arrays.asList(o1, o2, o3));
         categoryRepository.saveAll(Arrays.asList(cat1, cat2, cat3));
         productRepository.saveAll(Arrays.asList(p1, p2, p3));
+        orderItemRepository.saveAll(Arrays.asList(oi1, oi2, oi3));
 
 
     }
