@@ -23,4 +23,9 @@ public class OrderService {
         Optional<Order> order = repository.findById(id);
         return order.get();
     }
+
+    public Double getTotal(Long id){
+        Double total = this.findById(id).getTotal();
+        return total;
+    }
 }
