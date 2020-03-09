@@ -31,5 +31,11 @@ public class OrderResource {
         return ResponseEntity.ok().body(obj);
     }
 
+    @RequestMapping(value = "/{id}/total")
+    public ResponseEntity<Double> getTotal(@PathVariable Long id){
+        Double total = service.getTotal(id);
+        return ResponseEntity.ok().body(total);
+    }
+
 
 }
